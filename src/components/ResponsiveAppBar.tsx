@@ -15,6 +15,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { WhiteLogo } from '@/assets/WhiteLogo';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const pages = ['НҮҮР', 'ХООЛНЫ ЦЭС', 'ХҮРГЭЛТИЙН БҮС']
 
@@ -143,7 +145,48 @@ function ResponsiveAppBar() {
               placeholder="Хайх"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>  
+          </Search>
+          <Box  sx={{ display: { xs: 'none', md: 'flex' } }}>
+                          
+                            <IconButton
+                            
+                            sx={{ color: '#000000',
+                            borderRadius: "10",
+                              mr: 2,
+                              gap: 1,
+                              fontFamily: "Roboto, Helvetica,Arial, sans-serif",
+                             fontWeight: "500",
+                              fontSize: "0.875rem",
+                              lineHeight: 1.75,
+                              letterSpacing: "0.02857rem",
+                              textTransform: "uppercase",
+                    
+                            }}
+                            >
+                                <ShoppingBasketIcon />
+                                Сагс
+                            </IconButton>
+                            <IconButton
+                                // size="large"
+                                // edge="end"
+                                aria-label="account of current user"
+                                aria-haspopup="true"
+                                sx={{ color: '#000000',
+                                borderRadius: "10",
+                                  mr: 2,
+                                  gap: 1,
+                                  fontFamily: "Roboto, Helvetica,Arial, sans-serif",
+                                 fontWeight: "500",
+                                  fontSize: "0.875rem",
+                                  lineHeight: 1.75,
+                                  letterSpacing: "0.02857rem",
+                                  textTransform: "uppercase",
+                        }}
+                            >
+                                <PersonOutlineIcon  />
+                                Нэвтрэх
+                            </IconButton>
+                        </Box>  
         </Toolbar>
       </Container>
     </AppBar>
