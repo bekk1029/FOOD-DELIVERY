@@ -17,6 +17,7 @@ import InputBase from '@mui/material/InputBase';
 import { WhiteLogo } from '@/assets/WhiteLogo';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { Stack } from '@mui/material';
 
 const pages = ['НҮҮР', 'ХООЛНЫ ЦЭС', 'ХҮРГЭЛТИЙН БҮС']
 
@@ -83,7 +84,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{background: "#ffffff", color: '#000', width:"1265"}}>
+    <Stack  sx={{background: "#ffffff", color: '#000', width:"100%"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <WhiteLogo />
@@ -189,7 +190,7 @@ function ResponsiveAppBar() {
                         </Box>  
         </Toolbar>
       </Container>
-    </AppBar>
+    </Stack>
   );
 }
 export default ResponsiveAppBar;

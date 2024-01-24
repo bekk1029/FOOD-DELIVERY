@@ -9,12 +9,12 @@ export default function Home() {
   return (
     <Stack
       flex={1}
-      border={1}
       gap={3}
       alignItems={"center"}
       justifyContent={"center"}
+      py={5}
     >
-      <Stack width={400} gap={4}>
+      <Stack width={300} gap={4}>
         <Typography
           fontSize={28}
           fontWeight="bold"
@@ -53,7 +53,7 @@ export default function Home() {
             </Typography>
           </Button>
         </Stack>
-        <Stack width={400} pt={4} gap={4}>
+        <Stack width={300} pt={4} gap={4}>
           <Button
             fullWidth
             variant="contained"
