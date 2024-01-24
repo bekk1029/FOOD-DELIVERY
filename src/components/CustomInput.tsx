@@ -31,7 +31,7 @@ export const CustomInput = (props: CustomInputProps) => {
         type={type === "password" && showPassword ? "text" : type}
         sx={{
           bgcolor: "#ECEDF0",
-          width: 300,
+          width: 384,
         }}
         inputProps={{
           style: {

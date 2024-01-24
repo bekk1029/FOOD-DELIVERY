@@ -223,7 +223,7 @@ function ResponsiveAppBar() {
                   sx={{
                     position: "absolute",
                     top: "15%",
-                    left: "-20%",
+                    left: "-18%",
                   }}
                   id="menu-appbar"
                   anchorEl={anchorEl}

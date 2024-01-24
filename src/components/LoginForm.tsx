@@ -1,6 +1,6 @@
 "use client";
 import { CustomInput } from "@/components/CustomInput";
-import { Button, Stack, Typography, Container } from "@mui/material";
+import { Button, Stack, Typography, Link } from "@mui/material";
 import { useState } from "react";
 
 export default function LoginForm() {
@@ -15,7 +15,7 @@ export default function LoginForm() {
       padding={4}
       sx={{ backgroundColor: "#fff", borderRadius: "76px" }}
     >
-      <Stack width={300} gap={4} borderRadius={4}>
+      <Stack gap={4} borderRadius={4}>
         <Typography
           fontSize={28}
           fontWeight="bold"
@@ -43,6 +43,7 @@ export default function LoginForm() {
               setPassword(event.target.value);
             }}
           />
+
           <Button>
             <Typography
               color="text.secondary"
@@ -54,12 +55,14 @@ export default function LoginForm() {
             </Typography>
           </Button>
         </Stack>
-        <Stack width={300} pt={4} gap={4}>
+        <Stack width={"100%"} pt={4} gap={4}>
           <Button
             fullWidth
-            variant="contained"
             disableElevation
-            sx={{ py: "14.5px" }}
+            sx={{
+              py: "14.5px",
+            }}
+            variant="contained"
             disabled={!email || !password}
           >
             Нэвтрэх
