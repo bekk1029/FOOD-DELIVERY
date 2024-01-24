@@ -8,6 +8,7 @@ import {
   Container,
   grid2Classes,
 } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -39,17 +40,19 @@ export default function Page() {
           }}
         />
         <Stack width={"100%"} pt={4} gap={4}>
-          <Button
-            fullWidth
-            disableElevation
-            sx={{
-              py: "14.5px",
-            }}
-            variant="contained"
-            disabled={!email}
-          >
-            Үргэлжлүүлэх
-          </Button>
+          <Link href={"/resent"}>
+            <Button
+              fullWidth
+              disableElevation
+              sx={{
+                py: "14.5px",
+              }}
+              variant="contained"
+              disabled={!email}
+            >
+              Үргэлжлүүлэх
+            </Button>
+          </Link>
         </Stack>
       </Stack>
     </Stack>

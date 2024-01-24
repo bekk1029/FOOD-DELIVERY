@@ -8,14 +8,13 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   return (
     <Stack
-      flex={1}
-      gap={3}
+      width={"448px"}
       alignItems={"center"}
       justifyContent={"center"}
-      padding={4}
-      sx={{ backgroundColor: "#fff", borderRadius: "76px" }}
+      padding={1}
+      sx={{ backgroundColor: "blue", borderRadius: "76px" }}
     >
-      <Stack gap={4} borderRadius={4}>
+      <Stack gap={4} borderRadius={4} width={"100%"}>
         <Typography
           fontSize={28}
           fontWeight="bold"
