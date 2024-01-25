@@ -7,14 +7,8 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <Stack
-      width={"448px"}
-      alignItems={"center"}
-      justifyContent={"center"}
-      padding={1}
-      sx={{ backgroundColor: "blue", borderRadius: "76px" }}
-    >
-      <Stack gap={4} borderRadius={4} width={"100%"}>
+    <Stack alignItems={"center"} justifyContent={"center"}>
+      <Stack width={"448px"} gap={4} borderRadius={2} padding={4}>
         <Typography
           fontSize={28}
           fontWeight="bold"

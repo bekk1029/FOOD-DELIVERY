@@ -6,8 +6,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Stack } from "@mui/material";
 import { PineWhite } from "@/assets/PineWhite";
-import Link from "@mui/material/Link";
-import { url } from "inspector";
+import Link from "next/link";
 const pages = [
   "НҮҮР",
   "Холбоо барих",
@@ -68,22 +67,22 @@ function FooterBar() {
             alignItems="center"
             justifyContent="space-evenly"
           >
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="#">
               Нүүр
             </Link>
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="#">
               Холбоо барих
             </Link>
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="#">
               Хоолны цэс
             </Link>
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="/footerInfo">
               Үйлчилгээний нөхцөл
             </Link>
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="/footerInfo">
               Хүргэлтийн бүс
             </Link>
-            <Link color="#fff" href="#">
+            <Link style={{ color: "#fff" }} href="/footerInfo">
               Нууцлалын бодлого
             </Link>
           </Stack>

@@ -21,7 +21,7 @@ export default function Page() {
       padding={4}
       sx={{
         backgroundColor: "#fff",
-        borderRadius: "76px",
+        borderRadius: "16px",
       }}
     >
       <Stack padding={4} gap={4} borderRadius={4}>
