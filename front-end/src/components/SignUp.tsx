@@ -11,12 +11,15 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
-export default function Page() {
+import LoginForm from "./LoginForm";
+export default function SignUp() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [adress, setAdress] = useState("");
+  const [count, setCount] = useState(0)
+ if (count == 0) {
   return (
     <Stack
       flex={1}
@@ -90,7 +93,7 @@ export default function Page() {
             </Stack>
           </Link>
           <Stack width={"100%"} pt={4} gap={4}>
-            <Link href={"/login"}>
+            
               <Button
                 fullWidth
                 disableElevation
@@ -99,13 +102,20 @@ export default function Page() {
                 }}
                 variant="contained"
                 disabled={!email || !password || !name}
+                onClick={()=> {
+                  setCount(1)
+                }}
               >
                 Бүртгүүлэх
               </Button>
-            </Link>
           </Stack>
         </Stack>
       </Stack>
     </Stack>
   );
+ } else if (count == 1) {
+  return (
+    <><LoginForm/></>
+  )
+ }
 }

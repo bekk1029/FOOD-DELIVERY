@@ -1,7 +1,8 @@
 "use client";
 import { CustomInput } from "@/components";
 import LoginForm from "@/components/LoginForm";
-import { Code } from "@mui/icons-material";
+import { Collapse, Alert, IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Grid,
@@ -13,12 +14,13 @@ import {
 import { pages } from "next/dist/build/templates/app-page";
 import Link from "next/link";
 import { useState } from "react";
-export default function Page() {
+export default function ForgetPass() {
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
   const [count, setCount] = useState(0)
+  const [click, setClick] =useState(false);
 
   if (count == 0) {
     return(
@@ -143,8 +145,26 @@ export default function Page() {
       padding={4}
       sx={{ backgroundColor: "#fff", borderRadius: "16px" }}
     >
-      <Stack width={"448px"}>
-        <Stack padding={4} gap={4} borderRadius={4}>
+      <Stack width={"448px"} position={"relative"}>
+        <Stack padding={4} gap={4} borderRadius={4} alignItems={"center"}>
+        <Collapse sx={{position:"absolute", top:"-60px"}} in={click}>
+        <Alert 
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setClick(false);
+              }}
+            >
+            </IconButton>
+          }
+          sx={{ maxWidth:"398px", width:"100%", mb: 2, px:"24px", background:"#fff", border:"1px solid #18BA51",fontSize:"14px", fontWeight:"400", color:"#18BA51", borderRadius:"16px"}}
+        >
+         Нууц үг амжилттай солигдлоо
+        </Alert>
+      </Collapse>
           <Typography
             fontSize={28}
             fontWeight="bold"
@@ -183,7 +203,8 @@ export default function Page() {
               variant="contained"
               disabled={!password || !rePassword}
               onClick={()=> {
-                setCount(3 )
+                // setCount(3 )
+                setClick(true)
               }}
             >
               Үргэлжлүүлэх
