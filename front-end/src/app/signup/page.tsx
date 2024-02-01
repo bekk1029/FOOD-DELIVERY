@@ -1,22 +1,25 @@
 "use client";
-import { CustomInput } from "@/components";
+import CustomInput from "@/components/CustomInput";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import {
-  Button,
-  Grid,
-  Stack,
-  Typography,
-  Container,
-  grid2Classes,
-} from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+
+const validationSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+  name: yup.string().required(),
+  address: yup.string().required(),
+});
 export default function Page() {
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [adress, setAdress] = useState("");
+  const formik = useFormik({
+    initialValues: { email: "", password: "", address: "", name: "" },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
   return (
     <Stack
       flex={1}
@@ -40,44 +43,54 @@ export default function Page() {
           <CustomInput
             label="Нэр"
             placeholder="Нэрээ оруулна уу"
-            value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
+            value={formik.values.name}
+            name="name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
           />
           <CustomInput
             label="Имэйл"
+            name="email"
             placeholder="Имэйл хаягаа оруулна уу"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <CustomInput
             label="Хаяг"
+            name="address"
             placeholder="Та хаягаа оруулна уу"
-            value={adress}
-            onChange={(event) => {
-              setAdress(event.target.value);
-            }}
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.address && Boolean(formik.errors.address)}
+            helperText={formik.touched.address && formik.errors.address}
           />
           <CustomInput
             label="Нууц үг"
             type="password"
+            name="password"
             placeholder="Нууц үгээ оруулна уу"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
           <CustomInput
             label="Нууц үг давтах"
             type="password"
+            name="password"
             placeholder="Нууц үгээ оруулна уу"
-            value={rePassword}
-            onChange={(event) => {
-              setRePassword(event.target.value);
-            }}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
         </Stack>
         <Stack gap={3}>
@@ -94,11 +107,19 @@ export default function Page() {
               <Button
                 fullWidth
                 disableElevation
+                disabled={
+                  !formik.values.name ||
+                  !formik.values.email ||
+                  !formik.values.address ||
+                  !formik.values.password
+                }
                 sx={{
                   py: "14.5px",
                 }}
                 variant="contained"
-                disabled={!email || !password || !name}
+                onClick={() => {
+                  formik.handleSubmit();
+                }}
               >
                 Бүртгүүлэх
               </Button>

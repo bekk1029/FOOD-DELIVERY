@@ -3,11 +3,9 @@ import CustomInput from "./CustomInput";
 import { Button, Stack, Typography } from "@mui/material";
 import SignUp from "./SignUp";
 import Link from "next/link";
-import { useState } from "react";
-import Page from "@/app/home/page";
-import ForgetPass from "./ForgetPass";
 import { useFormik } from "formik";
 import * as yup from "yup";
+const axios = require("axios");
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
@@ -19,9 +17,22 @@ export default function LoginForm() {
     initialValues: { email: "", password: "" },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert("wqfj");
+      console.log(values);
     },
   });
+  // const Login = async () => {
+  //   let res = await axios.post(
+  //     "/api/user/login",
+  //     {
+  //       password,
+  //     },
+  //     {
+  //       Headers: {
+  //         Authorization: `Bearer ${formik.values.email}`,
+  //       },
+  //     }
+  //   );
+  // };
 
   return (
     <Stack alignItems={"center"} justifyContent={"center"}>
@@ -58,31 +69,36 @@ export default function LoginForm() {
             helperText={formik.touched.password && formik.errors.password}
           />
 
-          <Button>
-            <Typography
-              color="text.secondary"
-              fontSize={"14px"}
-              fontWeight="300"
-              textTransform="none"
-            >
-              Нууц үг сэргээх?
-            </Typography>
-          </Button>
+          <Link href={"/forgetPass"}>
+            <Button>
+              <Typography
+                color="text.secondary"
+                fontSize={"14px"}
+                fontWeight="300"
+                textTransform="none"
+              >
+                Нууц үг сэргээх?
+              </Typography>
+            </Button>
+          </Link>
         </Stack>
         <Stack width={"100%"} pt={4} gap={4}>
-          <Button
-            fullWidth
-            disableElevation
-            sx={{
-              py: "14.5px",
-            }}
-            variant="contained"
-            onClick={() => {
-              formik.handleSubmit();
-            }}
-          >
-            Нэвтрэх
-          </Button>
+          <Link href={"/home"}>
+            <Button
+              fullWidth
+              disableElevation
+              disabled={!formik.values.email || !formik.values.password}
+              sx={{
+                py: "14.5px",
+              }}
+              variant="contained"
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              Нэвтрэх
+            </Button>
+          </Link>
           <Typography textAlign="center" color="text.secondary">
             Эсвэл
           </Typography>
