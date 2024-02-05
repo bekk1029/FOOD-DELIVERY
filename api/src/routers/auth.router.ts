@@ -4,6 +4,6 @@ import exp from "constants";
 
 const authRouter = Router();
 
-authRouter.post("./signup", signUp).post("./login", login);
+authRouter.post("/signUp", signUp).post("/login", login);
 
 export default authRouter;

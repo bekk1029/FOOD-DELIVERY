@@ -1,7 +1,7 @@
 import { connect } from "./database";
 import app from "./app";
 
-const port = 3000;
+const port = 3005;
 
 connect();
 
