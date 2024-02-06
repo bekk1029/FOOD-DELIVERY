@@ -4,19 +4,22 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Stack } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import { PineWhite } from "@/assets/PineWhite";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 const pages = [
-  "НҮҮР",
-  "Холбоо барих",
-  "Хоолны цэс",
-  "Үйлчилгээний нөхцөл",
-  "Хүргэлтийн бүс",
-  "Нууцлалын бодлого",
+  { title: "НҮҮР", href: "home" },
+  { title: "Холбоо барих", href: "login" },
+  { title: "Хоолны цэс", href: "login" },
+  { title: "Үйлчилгээний нөхцөл", href: "footerInfo/termsService" },
+  { title: "ХҮРГЭЛТИЙН БҮС", href: "footerInfo/delivery" },
+  { title: "Нууцлалын бодлого", href: "footerInfo/privacy" },
 ];
 
 function FooterBar() {
+  const router = useRouter();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -67,24 +70,22 @@ function FooterBar() {
             alignItems="center"
             justifyContent="space-evenly"
           >
-            <Link style={{ color: "#fff" }} href="/home">
-              Нүүр
-            </Link>
-            <Link style={{ color: "#fff" }} href="#">
-              Холбоо барих
-            </Link>
-            <Link style={{ color: "#fff" }} href="#">
-              Хоолны цэс
-            </Link>
-            <Link style={{ color: "#fff" }} href="/footerInfo">
-              Үйлчилгээний нөхцөл
-            </Link>
-            <Link style={{ color: "#fff" }} href="/footerInfo">
-              Хүргэлтийн бүс
-            </Link>
-            <Link style={{ color: "#fff" }} href="/footerInfo">
-              Нууцлалын бодлого
-            </Link>
+            {pages.map((page, index) => (
+              <Button
+                key={index}
+                onClick={() => {
+                  setAnchorElUser(null), router.push(`/${page.href}`);
+                }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontSize: "16px",
+                }}
+              >
+                {page.title}
+              </Button>
+            ))}
           </Stack>
         </Stack>
       </Container>

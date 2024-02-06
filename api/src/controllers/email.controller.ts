@@ -1,7 +1,20 @@
-import nodemailer from "nodemailer";
 import { RequestHandler } from "express";
+import nodemailer from "nodemailer";
+import { UserModel } from "../models";
+
 export const sendEmail: RequestHandler = async (req, res) => {
   const { email } = req.body;
+
+  // const user = await UserModel.findOne({ email });
+
+  // if (!user) {
+  //   return res.status(401).json({
+  //     message: "User not found ",
+  //   });
+  // }
+
+  const otpCode = Math.floor(Math.random() * 1000000);
+
   try {
     const transporter = nodemailer.createTransport({
       service: "Gmail",
@@ -14,10 +27,10 @@ export const sendEmail: RequestHandler = async (req, res) => {
       },
     });
     const mailOptions = {
-      from: "dispositionz30k@gmail.com",
+      from: "bbaagii0830@gmail.com",
       to: email,
-      subject: "Hello, This code",
-      text: "882936",
+      subject: "from Food Delivery",
+      text: `One Time Password: ${otpCode}`,
     };
     await transporter.sendMail(mailOptions);
     res.json("Email sent!");
