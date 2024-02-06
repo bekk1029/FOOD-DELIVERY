@@ -36,7 +36,7 @@ export default function Page() {
         sx={{
           backgroundColor: "primary.main",
           width: "100%",
-          height: "80vh",
+          height: "90vh",
           backgroundImage: "url(/Food.png)",
         }}
       >
@@ -74,7 +74,7 @@ export default function Page() {
                   Horem ipsum dolor sit amet, consectetur adipiscing elit.
                 </Typography>
               </Stack>
-              <Stack maxWidth={618} width={"100%"} height={"50vh"}>
+              <Stack maxWidth={618} width={"100%"} height={"70vh"}>
                 <Stack position={"relative"}>
                   <Image
                     style={{ position: "absolute", top: "0px", left: "0px" }}

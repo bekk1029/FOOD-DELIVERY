@@ -6,6 +6,7 @@ import { json } from "body-parser";
 import authRouter from "./routers/auth.router";
 import userRouter from "./routers/users.router";
 import { authMiddleware } from "./middlewares";
+import emailRouter from "./routers/email.router";
 
 const app = express();
 
@@ -16,6 +17,6 @@ app.use("/", authRouter);
 
 app.use("/users", userRouter);
 
-// app.use(authMiddleware);
+app.use("/email", emailRouter);
 
 export default app;

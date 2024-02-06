@@ -67,7 +67,7 @@ function FooterBar() {
             alignItems="center"
             justifyContent="space-evenly"
           >
-            <Link style={{ color: "#fff" }} href="#">
+            <Link style={{ color: "#fff" }} href="/home">
               Нүүр
             </Link>
             <Link style={{ color: "#fff" }} href="#">
