@@ -17,11 +17,11 @@ function Page() {
       <Container maxWidth="lg">
         <Stack pb={5}>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5598617.903062559!2d98.55367466059306!3d46.75109421566715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3627050669aa6d4b%3A0xe0dd213937e6e096!2z0JzQvtC90LPQvtC7INCj0LvRgQ!5e0!3m2!1smn!2smn!4v1707213074605!5m2!1smn!2smn"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106094.86511888819!2d-118.2385153278588!3d33.800323311584506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2cae84099d759%3A0xa1003afac42a8faa!2z0JvQvtC90LMg0JHQuNGHLCDQmtCw0LvQuNGE0L7RgNC90LgsINCQ0LzQtdGA0LjQutC40LnQvSDQndGN0LPQtNGB0Y3QvSDQo9C70YE!5e0!3m2!1smn!2smn!4v1707274243828!5m2!1smn!2smn"
             width="100%"
             height="616"
             loading="lazy"
-          />
+          ></iframe>
         </Stack>
         <Stack py={2} gap={3}>
           <GreenStarCom title=" Хүргэлтийн бүс дэх хаягууд" />

@@ -6,7 +6,7 @@ import FooterBar from "@/components/FooterBar";
 import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { theme } from "@/theme";
-
+import { AuthProvider } from "@/components/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -17,16 +17,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <Stack minHeight="100vh">
-              <ResponsiveAppBar />
-              <Stack flex={1}>{children}</Stack>
-              <FooterBar />
-            </Stack>
-            <CssBaseline />
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <AuthProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <Stack minHeight="100vh">
+                <ResponsiveAppBar />
+                <Stack flex={1}>{children}</Stack>
+                <FooterBar />
+              </Stack>
+              <CssBaseline />
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </AuthProvider>
       </body>
     </html>
   );
