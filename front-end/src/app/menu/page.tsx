@@ -71,7 +71,7 @@ export default function Menu() {
             ))}
           </Stack>
           <Grid container spacing={3}>
-            {new Array(12).fill(0).map((_, index) => (
+            {new Array(8).fill(0).map((_, index) => (
               <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                 <CustomCard
                   title="JENNIE KIM"

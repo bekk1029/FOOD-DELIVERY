@@ -5,19 +5,26 @@ import * as yup from "yup";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import { Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
+import { useAuth } from "@/providers/AuthProvider";
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
-  name: yup.string().required(),
+  username: yup.string().required(),
   address: yup.string().required(),
 });
 export default function Page() {
+  const { signup } = useAuth();
   const formik = useFormik({
-    initialValues: { email: "", password: "", address: "", name: "" },
+    initialValues: { email: "", password: "", address: "", username: "" },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await signup({
+        email: values.email,
+        username: values.username,
+        address: values.address,
+        password: values.password,
+      });
     },
   });
   return (
@@ -43,12 +50,12 @@ export default function Page() {
           <CustomInput
             label="Нэр"
             placeholder="Нэрээ оруулна уу"
-            value={formik.values.name}
-            name="name"
+            value={formik.values.username}
+            name="username"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
           />
           <CustomInput
             label="Имэйл"
@@ -94,7 +101,7 @@ export default function Page() {
           />
         </Stack>
         <Stack gap={3}>
-          <Link href={"/footerInfo"} style={{ color: "#fff" }}>
+          <Link href={"/ser"} style={{ color: "#fff" }}>
             <Stack flexDirection="row" gap="11.5px">
               <CloudQueueIcon sx={{ mx: "8px", color: "#000" }} />
               <Typography color={"#000"} sx={{ textDecorationLine: "none" }}>
@@ -103,27 +110,20 @@ export default function Page() {
             </Stack>
           </Link>
           <Stack width={"100%"} pt={4} gap={4}>
-            <Link href={"/login"}>
-              <Button
-                fullWidth
-                disableElevation
-                disabled={
-                  !formik.values.name ||
-                  !formik.values.email ||
-                  !formik.values.address ||
-                  !formik.values.password
-                }
-                sx={{
-                  py: "14.5px",
-                }}
-                variant="contained"
-                onClick={() => {
-                  formik.handleSubmit();
-                }}
-              >
-                Бүртгүүлэх
-              </Button>
-            </Link>
+            <Button
+              fullWidth
+              disableElevation
+              disabled={!formik.isValid}
+              sx={{
+                py: "14.5px",
+              }}
+              variant="contained"
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              Бүртгүүлэх
+            </Button>
           </Stack>
         </Stack>
       </Stack>

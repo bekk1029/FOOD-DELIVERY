@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Typography, Stack, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import CustomCard from "../../components/CustomCard";
-import GreenStarCom from "../../components/GreenStarCom";
+import CustomCard from "../CustomCard";
+import GreenStarCom from "../GreenStarCom";
 
-export default function SaleFoods() {
+export default function MainCourse() {
   return (
     <Stack gap={3}>
       <Stack
@@ -13,7 +13,7 @@ export default function SaleFoods() {
         justifyContent={"space-between"}
         py={2}
       >
-        <GreenStarCom title=" Хямдралтай" />
+        <GreenStarCom title=" Үндсэн хоол" />
         <Button
           sx={{
             width: "fit-content",

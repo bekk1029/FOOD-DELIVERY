@@ -1,5 +1,5 @@
 import { emailcode } from "@/app/forgetPass/page";
-import { api } from "@/common/axios";
+import { api } from "@/common/axios/page";
 import { useRouter } from "next/navigation";
 import {
   PropsWithChildren,
@@ -9,18 +9,25 @@ import {
   useContext,
   useState,
 } from "react";
-// import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
-type User = {
+type loginParams = {
   email: string;
-  _id: string;
+  password: string;
+};
+type signupParams = {
+  username: string;
+  email: string;
+  password: string;
+  address: string;
 };
 
 type AuthContextType = {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  signup: (email: String, password: String, name: String) => void;
-  login: (email: String, password: String) => void;
+  signup: (params: signupParams) => Promise<void>;
+  login: (params: loginParams) => Promise<void>;
 };
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -28,12 +35,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  const login = async (email: String, password: String) => {
+  const login = async (params: loginParams) => {
     try {
-      const { data } = await api.post("login", {
-        email,
-        password,
-      });
+      const { data } = await api.post("/login", params);
 
       const { token } = data;
 
@@ -45,19 +49,19 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const signup = async (email: String, password: String, username: String) => {
+  const signup = async (params: signupParams) => {
     try {
-      const { data } = await api.post("signUp", {
-        email,
-        password,
-        username,
+      const { data } = await api.post("/signup", params);
+      router.push("/login");
+      toast.success("Cadastro realizado com sucesso!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
       });
-
-      const { token } = data;
-      router.push("/");
-      localStorage.setItem("token", token);
     } catch (error) {
-      console.log("login error");
+      if (error) {
+        alert("aldaa garlaa");
+      }
     }
   };
 

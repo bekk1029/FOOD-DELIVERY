@@ -19,13 +19,14 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Stack } from "@mui/material";
 import { useState } from "react";
-import LoginForm from "./LoginForm";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const pages = [
   { title: "НҮҮР", href: "home" },
-  { title: "ХООЛНЫ ЦЭС", href: "login" },
-  { title: "ХҮРГЭЛТИЙН БҮС", href: "home" },
+  { title: "ХООЛНЫ ЦЭС", href: "menu" },
+  { title: "ХҮРГЭЛТИЙН БҮС", href: "delivery" },
 ];
 
 const Search = styled("div")(({ theme }) => ({
@@ -72,6 +73,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function ResponsiveAppBar() {
+  const pathname = usePathname();
   const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -150,7 +152,11 @@ function ResponsiveAppBar() {
                 onClick={() => {
                   setAnchorElUser(null), router.push(`/${page.href}`);
                 }}
-                sx={{ my: 2, color: "black", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: pathname.includes(page.href) ? "primary.main" : "#000",
+                  display: "block",
+                }}
               >
                 {page.title}
               </Button>
@@ -183,62 +189,30 @@ function ResponsiveAppBar() {
               <ShoppingBasketIcon />
               Сагс
             </IconButton>
-            <IconButton
-              // size="large"
-              // edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              sx={{
-                color: "#000000",
-                borderRadius: "10",
-                mr: 2,
-                gap: 1,
-                fontFamily: "Roboto, Helvetica,Arial, sans-serif",
-                fontWeight: "500",
-                fontSize: "0.875rem",
-                lineHeight: 1.75,
-                letterSpacing: "0.02857rem",
-                textTransform: "uppercase",
-              }}
-            >
-              <PersonOutlineIcon />
-              Нэвтрэх
-            </IconButton>
-            {auth && (
-              <div>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                ></IconButton>
-                <Menu
-                  sx={{
-                    position: "absolute",
-                    top: "15%",
-                    left: "-15%",
-                  }}
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <LoginForm />
-                </Menu>
-              </div>
-            )}
+            <Link href={"login"} passHref>
+              <IconButton
+                // size="large"
+                // edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                sx={{
+                  color: "#000000",
+                  borderRadius: "10",
+                  mr: 2,
+                  gap: 1,
+                  fontFamily: "Roboto, Helvetica,Arial, sans-serif",
+                  fontWeight: "500",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.75,
+                  letterSpacing: "0.02857rem",
+                  textTransform: "uppercase",
+                }}
+              >
+                <PersonOutlineIcon />
+                Нэвтрэх
+              </IconButton>
+            </Link>
           </Box>
         </Toolbar>
       </Container>

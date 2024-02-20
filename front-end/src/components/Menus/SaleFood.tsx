@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Typography, Stack, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import CustomCard from "../../components/CustomCard";
-import GreenStarCom from "../../components/GreenStarCom";
+import CustomCard from "../CustomCard";
+import GreenStarCom from "../GreenStarCom";
 
-export default function Dessert() {
+export default function SaleFoods() {
   return (
     <Stack gap={3}>
       <Stack

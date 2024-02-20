@@ -1,3 +1,3 @@
-export * from "./CustomInput"
-export * from "./ResponsiveAppBar"
-export * from "./FooterBar"
+export * from "./CustomInput";
+export * from "./headerfooter/ResponsiveAppBar";
+export * from "./headerfooter/FooterBar";

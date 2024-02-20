@@ -11,10 +11,10 @@ import { useRouter } from "next/navigation";
 const pages = [
   { title: "НҮҮР", href: "home" },
   { title: "Холбоо барих", href: "login" },
-  { title: "Хоолны цэс", href: "login" },
-  { title: "Үйлчилгээний нөхцөл", href: "footerInfo/termsService" },
-  { title: "ХҮРГЭЛТИЙН БҮС", href: "footerInfo/delivery" },
-  { title: "Нууцлалын бодлого", href: "footerInfo/privacy" },
+  { title: "Хоолны цэс", href: "menu" },
+  { title: "Үйлчилгээний нөхцөл", href: "termsService" },
+  { title: "ХҮРГЭЛТИЙН БҮС", href: "delivery" },
+  { title: "Нууцлалын бодлого", href: "privacy" },
 ];
 
 function FooterBar() {

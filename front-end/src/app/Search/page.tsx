@@ -1,7 +1,7 @@
 "use client";
 import CustomCard from "@/components/CustomCard";
-import FooterBar from "@/components/FooterBar";
-import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import FooterBar from "@/components/headerfooter/FooterBar";
+import ResponsiveAppBar from "@/components/headerfooter/ResponsiveAppBar";
 import {
   Button,
   Grid,

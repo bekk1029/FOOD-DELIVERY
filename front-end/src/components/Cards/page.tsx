@@ -1,8 +1,8 @@
 import * as React from "react";
-import AllChooseCard from "@/components/AllChooseCard";
-import BookCard from "@/components/BookCard";
-import DHLCard from "@/components/DHLCard";
-import VegatableCard from "@/components/VegatableCard";
+import AllChooseCard from "@/components/AllCards/AllChooseCard";
+import BookCard from "@/components/AllCards/BookCard";
+import DHLCard from "@/components/AllCards/DHLCard";
+import VegatableCard from "@/components/AllCards/VegatableCard";
 import { Stack, Container, Grid } from "@mui/material";
 
 export default function AllCards() {

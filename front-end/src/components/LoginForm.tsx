@@ -1,7 +1,6 @@
 "use client";
 import CustomInput from "./CustomInput";
 import { Button, Stack, Typography } from "@mui/material";
-import SignUp from "./SignUp";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -102,30 +101,13 @@ export default function LoginForm() {
           <Typography textAlign="center" color="text.secondary">
             Эсвэл
           </Typography>
-          <Button fullWidth variant="outlined" sx={{ py: "14.5px" }}>
-            Бүртгүүлэх
-          </Button>
+          <Link href={"/signup"}>
+            <Button fullWidth variant="outlined" sx={{ py: "14.5px" }}>
+              Бүртгүүлэх
+            </Button>
+          </Link>
         </Stack>
       </Stack>
     </Stack>
   );
-  // } else if (count == 1) {
-  //   return (
-  //     <>
-  //       <Page />
-  //     </>
-  //   );
-  // } else if (count == 2) {
-  //   return (
-  //     <>
-  //       <SignUp />
-  //     </>
-  //   );
-  // } else if (count == 3) {
-  //   return (
-  //     <>
-  //       <ForgetPass />
-  //     </>
-  //   );
-  // }
 }
