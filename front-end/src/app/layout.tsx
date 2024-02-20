@@ -6,7 +6,9 @@ import FooterBar from "@/components/headerfooter/FooterBar";
 import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { theme } from "@/theme";
-import { AuthProvider } from "@/providers/AuthProvider";
+import { AuthProvider } from "@/providers/AuthProviders/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -27,6 +29,18 @@ export default function RootLayout({
               </Stack>
             </AuthProvider>
             <CssBaseline />
+            <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

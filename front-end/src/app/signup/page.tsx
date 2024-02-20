@@ -5,7 +5,7 @@ import * as yup from "yup";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import { Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/providers/AuthProviders/AuthProvider";
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
