@@ -1,9 +1,10 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { BannerFood, useFModal } from "@/providers/FoodModalProvider";
 import { CardActionArea, Stack, Button } from "@mui/material";
+import { useState } from "react";
 
 type CustomCardProps = {
   title: string;
@@ -14,9 +15,15 @@ type CustomCardProps = {
 };
 
 export default function CustomCard(props: CustomCardProps) {
+  const [open, setOpen] = useState(false);
   const { title, image, mediumprice, regularprice, discount } = props;
   return (
-    <Card sx={{ maxWidth: 282, backgroundColor: "white" }}>
+    <Card
+      sx={{ maxWidth: 282, backgroundColor: "white" }}
+      onClick={() => {
+        setOpen(true);
+      }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"

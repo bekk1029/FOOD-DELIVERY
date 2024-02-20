@@ -1,39 +1,137 @@
 "use client";
-import { CustomInput } from "@/components/CustomInput";
+import { api } from "@/common";
+import { LoadingPage } from "@/components/loading";
+import { ProfileText } from "@/components/ProfileSide/ProfileText";
+import { useAuth } from "@/providers/AuthProviders/AuthProvider";
 import {
-  Button,
-  Stack,
-  Typography,
-  Avatar,
-  Box,
-  Container,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+  Call,
+  Edit,
+  EmailOutlined,
+  History,
+  Logout,
+  PersonOutline,
+} from "@mui/icons-material";
+import { Stack, Typography } from "@mui/material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
+type userType = {
+  username: string;
+  number: number;
+  email: string;
+};
 export default function Page() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState<userType>();
+  const router = useRouter();
+  const { isLoggedIn, setModal } = useAuth();
+
+  if (!isLoggedIn) {
+    return router.push("/home");
+  }
+
+  const getUser = async () => {
+    try {
+      const res = await api.get("/getUser", {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+
+      const { user } = res.data;
+
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
-    <Container sx={{ border: "solid 1px black" }} maxWidth={"xs"}>
-      <Stack alignItems={"center"} justifyContent={"center"}>
-        <Stack>
-          <Stack>
-            <Box>
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                sx={{ width: 56, height: 56 }}
-              />
-              <Stack>
-                <EditIcon />
-              </Stack>
-            </Box>
-            <Typography>УгтахБаяр</Typography>
+    <Stack
+      width={"100%"}
+      height={"100%"}
+      flexDirection={"row"}
+      justifyContent={"center"}
+      alignContent={"center"}
+      marginTop={"55px"}
+      py={10}
+    >
+      <Stack gap={3} width={400}>
+        <Stack
+          width={"100%"}
+          alignItems={"center"}
+          gap={5}
+          position={"relative"}
+        >
+          <Stack width={120} height={120} position={"relative"}>
+            <Stack
+              width={"100%"}
+              height={"100%"}
+              position={"relative"}
+              borderRadius={"50%"}
+              overflow={"hidden"}
+            >
+              <Image fill src={"/profile.jpeg"} alt="" />
+            </Stack>
+            <Stack
+              width={34}
+              height={34}
+              border={"1px solid #D6D8DB"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              color={"primary.main"}
+              position={"absolute"}
+              bottom={0}
+              right={0}
+              borderRadius={"50%"}
+              bgcolor={"white"}
+            >
+              <Edit />
+            </Stack>
           </Stack>
-          <Stack></Stack>
+          <Typography fontSize={28} fontWeight={700}>
+            {user?.username}
+          </Typography>
+          {/* Bottom */}
         </Stack>
+        {/* //one text */}
+        {!user ? (
+          <LoadingPage />
+        ) : (
+          <>
+            <ProfileText
+              type="grey"
+              value={user.username}
+              label="Таны нэр"
+              icon={<PersonOutline fontSize="large" />}
+            />
+            <ProfileText
+              type="grey"
+              value={user.number}
+              label="Утасны дугаар"
+              icon={<Call />}
+            />
+            <ProfileText
+              type="grey"
+              value={user.email}
+              label="Имэйл хаяг"
+              icon={<EmailOutlined />}
+            />
+            <ProfileText
+              type="white"
+              value={"Захиалгын түүх"}
+              icon={<History />}
+            />
+            <ProfileText
+              type="white"
+              value={"Гарах"}
+              icon={<Logout />}
+              setState={setModal}
+            />
+          </>
+        )}
       </Stack>
-    </Container>
+    </Stack>
   );
 }

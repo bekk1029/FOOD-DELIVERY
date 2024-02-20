@@ -1,37 +1,43 @@
 "use client";
 import CustomInput from "./CustomInput";
 import { Button, Stack, Typography } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as yup from "yup";
-const axios = require("axios");
+import { useAuth } from "@/providers/AuthProviders/AuthProvider";
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
 });
 
-export default function LoginForm() {
+type LoginFormProps = {
+  setShown?: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function LoginForm(props: LoginFormProps) {
+  const { login } = useAuth();
+  const {
+    setShown = (p) => {
+      return p;
+    },
+  } = props;
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await login({
+        email: values.email,
+        password: values.password,
+      });
     },
   });
-  // const Login = async () => {
-  //   let res = await axios.post(
-  //     "/api/user/login",
-  //     {
-  //       password,
-  //     },
-  //     {
-  //       Headers: {
-  //         Authorization: `Bearer ${formik.values.email}`,
-  //       },
-  //     }
-  //   );
-  // };
+
+  const { isLoggedIn } = useAuth();
 
   return (
     <Stack alignItems={"center"} justifyContent={"center"}>
@@ -68,44 +74,53 @@ export default function LoginForm() {
             helperText={formik.touched.password && formik.errors.password}
           />
 
-          <Link href={"/forgetPass"}>
-            <Button>
-              <Typography
-                color="text.secondary"
-                fontSize={"14px"}
-                fontWeight="300"
-                textTransform="none"
-              >
-                Нууц үг сэргээх?
-              </Typography>
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              router.push("/passrec");
+              setShown(false);
+            }}
+          >
+            <Typography
+              color="text.secondary"
+              fontSize={"14px"}
+              fontWeight="300"
+              textTransform="none"
+            >
+              Нууц үг сэргээх?
+            </Typography>
+          </Button>
         </Stack>
         <Stack width={"100%"} pt={4} gap={4}>
-          <Link href={"/home"}>
-            <Button
-              fullWidth
-              disableElevation
-              disabled={!formik.values.email || !formik.values.password}
-              sx={{
-                py: "14.5px",
-              }}
-              variant="contained"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-            >
-              Нэвтрэх
-            </Button>
-          </Link>
+          <Button
+            fullWidth
+            disableElevation
+            disabled={!formik.isValid}
+            sx={{
+              py: "14.5px",
+            }}
+            variant="contained"
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+          >
+            Нэвтрэх
+          </Button>
+
           <Typography textAlign="center" color="text.secondary">
             Эсвэл
           </Typography>
-          <Link href={"/signup"}>
-            <Button fullWidth variant="outlined" sx={{ py: "14.5px" }}>
-              Бүртгүүлэх
-            </Button>
-          </Link>
+
+          <Button
+            fullWidth
+            variant="outlined"
+            sx={{ py: "14.5px" }}
+            onClick={() => {
+              setShown(false);
+              router.push("/signup");
+            }}
+          >
+            Бүртгүүлэх
+          </Button>
         </Stack>
       </Stack>
     </Stack>

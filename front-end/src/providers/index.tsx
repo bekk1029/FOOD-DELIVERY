@@ -1,5 +1,7 @@
 import React from "react";
 import { AuthProvider } from "./AuthProviders/AuthProvider";
+import { BannerProvider } from "./FoodModalProvider";
+import { DrawProvider } from "./DrawBar/DrawBar";
 import { PassrecProvider } from "./RecoverPass/recoverPass";
 
 type MainProviderProps = {
@@ -8,8 +10,10 @@ type MainProviderProps = {
 
 export const MainProvider = ({ children }: MainProviderProps) => {
   return (
-    <AuthProvider>
-      <PassrecProvider>{children}</PassrecProvider>
-    </AuthProvider>
+    <BannerProvider>
+      <AuthProvider>
+        <DrawProvider>{children} </DrawProvider>
+      </AuthProvider>
+    </BannerProvider>
   );
 };

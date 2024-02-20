@@ -3,8 +3,11 @@ import { Typography, Stack, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CustomCard from "../CustomCard";
 import GreenStarCom from "../GreenStarCom";
+import { useRouter } from "next/navigation";
+import { FoodModalCard } from "../Modals/FoodModalCard";
 
 export default function SaleFoods() {
+  const router = useRouter();
   return (
     <Stack gap={3}>
       <Stack
@@ -20,6 +23,9 @@ export default function SaleFoods() {
             textAlign: "center",
             display: "flex",
             gap: "10px",
+          }}
+          onClick={() => {
+            router.push("/menu");
           }}
         >
           <Typography textAlign={"center"} fontSize={14} fontWeight={400}>

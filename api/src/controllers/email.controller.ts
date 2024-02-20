@@ -6,11 +6,10 @@ import { UserModel } from "../models";
 export const sendOTP: RequestHandler = async (req, res) => {
   const { email } = req.body;
 
-  const Otp = Math.floor(100000 + Math.random() * 900000);
   try {
-    if (!email) {
-      return res.json({ message: "Email not found" });
-    }
+    // if (!email) {
+    //   return res.json({ message: "Email not found" });
+    // }
 
     const user = UserModel.findOne({ email: email });
 
@@ -19,6 +18,8 @@ export const sendOTP: RequestHandler = async (req, res) => {
         message: "User not found , Please sign in",
       });
     }
+
+    const Otp = Math.floor(100000 + Math.random() * 900000);
 
     const transporter = nodemailer.createTransport({
       service: "Gmail",

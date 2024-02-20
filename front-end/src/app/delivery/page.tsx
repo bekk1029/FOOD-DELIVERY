@@ -8,7 +8,8 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
-  Box,
+  Divider,
+  Grid,
 } from "@mui/material";
 import GreenStarCom from "@/components/GreenStarCom";
 function Page() {
@@ -25,7 +26,7 @@ function Page() {
         </Stack>
         <Stack py={2} gap={3}>
           <GreenStarCom title=" Хүргэлтийн бүс дэх хаягууд" />
-          <Stack
+          {/* <Stack
             gap={5}
             width={"100%"}
             flexDirection={"row"}
@@ -70,6 +71,61 @@ function Page() {
                 </CardContent>
               </CardActionArea>
             </Card>
+          </Stack> */}
+          <Stack pt={"60px"}>
+            <Stack spacing={3} direction={"row"} width={"100%"}>
+              <Stack
+                padding={3}
+                width={"50%"}
+                boxShadow={2}
+                borderRadius={"16px"}
+              >
+                <Typography paddingY={2} fontSize={20} fontWeight={590}>
+                  А бүс
+                </Typography>
+                <Divider
+                  sx={{
+                    borderColor: "primary.main",
+                    marginBottom: "16px",
+                  }}
+                />
+                <Grid container spacing={2} width={"50%"}>
+                  {new Array(12).fill(0).map((_, index) => (
+                    <Grid key={index} item xs={6} spacing={2}>
+                      <Typography fontSize={16} fontWeight={400}>
+                        Нархан хотхон
+                      </Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Stack>
+
+              <Stack
+                padding={3}
+                width={"50%"}
+                boxShadow={2}
+                borderRadius={"16px"}
+              >
+                <Typography paddingY={2} fontSize={20} fontWeight={590}>
+                  Б бүс
+                </Typography>
+                <Divider
+                  sx={{
+                    borderColor: "primary.main",
+                    marginBottom: "16px",
+                  }}
+                />
+                <Grid container spacing={2} width={"50%"}>
+                  {new Array(12).fill(0).map((_, index) => (
+                    <Grid key={index} rowSpacing={20} item xs={6}>
+                      <Typography fontSize={16} fontWeight={400}>
+                        26-р байр
+                      </Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
       </Container>

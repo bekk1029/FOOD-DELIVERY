@@ -1,33 +1,19 @@
 "use client";
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-import { WhiteLogo } from "@/assets/WhiteLogo";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { Stack } from "@mui/material";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 
-const pages = [
-  { title: "НҮҮР", href: "home" },
-  { title: "ХООЛНЫ ЦЭС", href: "menu" },
-  { title: "ХҮРГЭЛТИЙН БҮС", href: "delivery" },
-];
+import { useAuth } from "@/providers/AuthProviders/AuthProvider";
+import { useFModal } from "@/providers/FoodModalProvider";
+import SearchIcon from "@mui/icons-material/Search";
+import { WhiteLogo } from "@/assets/WhiteLogo";
+import { styled, alpha } from "@mui/material/styles";
+import { PersonOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { HeaderLoginCard } from "./headerLoginCard";
+import { useDraw } from "@/providers/DrawBar/DrawBar";
+import { ProfilePicFrame } from "../ProfileSide/ProfilePic";
+import { api } from "@/common";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,7 +40,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
 }));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   width: "100%",
@@ -71,152 +56,158 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
-function ResponsiveAppBar() {
-  const pathname = usePathname();
+export const ResponsiveAppBar = () => {
+  const [searchValue, setSearchValue] = useState("");
+  const [userName, setUserName] = useState("");
   const router = useRouter();
+  const [login, setLogin] = useState(false);
+  const { isLoggedIn, checkToken } = useAuth();
+  const { myLink } = useFModal();
+  const { setDrawOpen } = useDraw();
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [auth, setAuth] = React.useState(true);
+  const getUserName = async () => {
+    try {
+      const res = await api.get("/getUserName", {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+      setUserName(res.data.userName);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  useEffect(() => {
+    getUserName();
+  }, []);
   return (
     <Stack
-      sx={{ background: "#ffffff", color: "#000", width: "100%", mb: "24px" }}
+      sx={{
+        top: "0",
+        left: "0",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: "50",
+        position: "sticky",
+        background: "#ffff",
+        color: "#000",
+        width: "100%",
+        mb: "24px",
+      }}
     >
-      <Container maxWidth="lg">
-        <Toolbar disableGutters>
-          <WhiteLogo />
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+      <Container maxWidth={"lg"}>
+        {!isLoggedIn && login && (
+          <HeaderLoginCard setShown={setLogin} shown={login} />
+        )}
+        <Stack
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          width={"100%"}
+          sx={{ padding: "8px 0px" }}
+        >
+          <Stack
+            flexDirection={"row"}
+            gap={5}
+            height={"full"}
+            alignItems={"center"}
+          >
+            <WhiteLogo />
+            <Button
+              onClick={() => {
+                router.push("/home");
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                fontSize: 14,
+                fontWeight: 700,
+                color: myLink.includes("home") ? "green" : "black",
               }}
             >
-              {pages.map((page, index) => (
-                <MenuItem key={index} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.title}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <Button
-                key={index}
-                onClick={() => {
-                  setAnchorElUser(null), router.push(`/${page.href}`);
-                }}
-                sx={{
-                  my: 2,
-                  color: pathname.includes(page.href) ? "primary.main" : "#000",
-                  display: "block",
-                }}
-              >
-                {page.title}
-              </Button>
-            ))}
-          </Box>
-          <Search sx={{ border: 1, borderRadius: 2 }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Хайх"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
+              НҮҮР
+            </Button>
+            <Button
+              onClick={() => {
+                router.push("/menu");
+              }}
               sx={{
-                color: "#000000",
-                borderRadius: "10",
-                mr: 2,
-                gap: 1,
-                fontFamily: "Roboto, Helvetica,Arial, sans-serif",
-                fontWeight: "500",
-                fontSize: "0.875rem",
-                lineHeight: 1.75,
-                letterSpacing: "0.02857rem",
-                textTransform: "uppercase",
+                fontSize: 14,
+                fontWeight: 700,
+                color: myLink.includes("menu") ? "green" : "black",
               }}
             >
-              <ShoppingBasketIcon />
-              Сагс
-            </IconButton>
-            <Link href={"login"} passHref>
-              <IconButton
-                // size="large"
-                // edge="end"
-                aria-label="account of current user"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                sx={{
-                  color: "#000000",
-                  borderRadius: "10",
-                  mr: 2,
-                  gap: 1,
-                  fontFamily: "Roboto, Helvetica,Arial, sans-serif",
-                  fontWeight: "500",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.75,
-                  letterSpacing: "0.02857rem",
-                  textTransform: "uppercase",
-                }}
+              ХООЛНЫ ЦЭС
+            </Button>
+            <Button
+              onClick={() => {
+                router.push("/delivery");
+              }}
+              sx={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: myLink.includes("delivery") ? "green" : "black",
+              }}
+            >
+              ХҮРГЭЛТИЙН БҮС
+            </Button>
+          </Stack>
+          <Stack flexDirection={"row"} alignItems={"center"} gap={3}>
+            <Search sx={{ border: 1, borderRadius: 2 }}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Хайх"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            <Stack
+              flexDirection={"row"}
+              gap={1}
+              onClick={() => {
+                setDrawOpen(true);
+              }}
+              sx={{ cursor: "pointer" }}
+            >
+              <ShoppingCartOutlined />
+              <Typography>Сагс</Typography>
+            </Stack>
+            <Stack
+              sx={{ cursor: "pointer" }}
+              flexDirection={"row"}
+              alignItems={"center"}
+              gap={1}
+              onClick={() => {
+                getUserName();
+                isLoggedIn
+                  ? router.push("/userProfile")
+                  : router.push("/login");
+              }}
+            >
+              <Stack
+                width={32}
+                height={32}
+                flexDirection={"row"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                borderRadius={"50%"}
+                overflow={"hidden"}
               >
-                <PersonOutlineIcon />
-                Нэвтрэх
-              </IconButton>
-            </Link>
-          </Box>
-        </Toolbar>
+                {isLoggedIn ? (
+                  <ProfilePicFrame src="/profile.jpeg" />
+                ) : (
+                  <PersonOutlined />
+                )}
+              </Stack>
+
+              <Typography color={"black"}>
+                {isLoggedIn ? userName : "Нэвтрэх"}
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
       </Container>
     </Stack>
   );
-}
-export default ResponsiveAppBar;
+};
