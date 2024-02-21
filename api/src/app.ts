@@ -18,9 +18,7 @@ app.use(json());
 app.use(bodyParser.json());
 
 app.use("/", authRouter);
-
 app.use("/users", userRouter);
-
 app.use("/email", emailRouter);
 app.use("/email", passwordRouter);
 

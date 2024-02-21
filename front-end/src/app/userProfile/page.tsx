@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/common";
 import { LoadingPage } from "@/components/loading";
+import { ProfileEdit } from "@/components/ProfileSide/ProfileEdit";
 import { ProfileText } from "@/components/ProfileSide/ProfileText";
 import { useAuth } from "@/providers/AuthProviders/AuthProvider";
 import {
@@ -10,6 +11,7 @@ import {
   History,
   Logout,
   PersonOutline,
+  PersonRounded,
 } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -20,15 +22,17 @@ type userType = {
   username: string;
   number: number;
   email: string;
+  profilePic: string;
 };
 export default function Page() {
   const [user, setUser] = useState<userType>();
+  const [isEditing, setEditing] = useState(false);
   const router = useRouter();
   const { isLoggedIn, setModal } = useAuth();
 
-  if (!isLoggedIn) {
-    return router.push("/home");
-  }
+  // if (!isLoggedIn) {
+  //   return router.push("/home");
+  // }
 
   const getUser = async () => {
     try {
@@ -48,90 +52,112 @@ export default function Page() {
     getUser();
   }, []);
   return (
-    <Stack
-      width={"100%"}
-      height={"100%"}
-      flexDirection={"row"}
-      justifyContent={"center"}
-      alignContent={"center"}
-      marginTop={"55px"}
-      py={10}
-    >
-      <Stack gap={3} width={400}>
+    <>
+      {isEditing ? (
+        <ProfileEdit
+          name={user?.name}
+          number={user?.number}
+          email={user?.email}
+          picture={user?.profilePic}
+        />
+      ) : (
         <Stack
           width={"100%"}
-          alignItems={"center"}
-          gap={5}
-          position={"relative"}
+          height={"100%"}
+          flexDirection={"row"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          marginTop={"55px"}
+          py={10}
         >
-          <Stack width={120} height={120} position={"relative"}>
+          <Stack gap={3} width={400}>
             <Stack
               width={"100%"}
-              height={"100%"}
-              position={"relative"}
-              borderRadius={"50%"}
-              overflow={"hidden"}
-            >
-              <Image fill src={"/profile.jpeg"} alt="" />
-            </Stack>
-            <Stack
-              width={34}
-              height={34}
-              border={"1px solid #D6D8DB"}
-              justifyContent={"center"}
               alignItems={"center"}
-              color={"primary.main"}
-              position={"absolute"}
-              bottom={0}
-              right={0}
-              borderRadius={"50%"}
-              bgcolor={"white"}
+              gap={5}
+              position={"relative"}
             >
-              <Edit />
+              <Stack width={120} height={120} position={"relative"}>
+                <Stack
+                  width={"100%"}
+                  height={"100%"}
+                  position={"relative"}
+                  borderRadius={"50%"}
+                  overflow={"hidden"}
+                >
+                  {!user?.profilePic ? (
+                    <Image fill src={"/noProfile.jpeg"} alt="" />
+                  ) : (
+                    <Image fill src={user.profilePic} alt="" />
+                  )}
+                </Stack>
+                <Stack
+                  width={34}
+                  height={34}
+                  border={"1px solid #D6D8DB"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  color={"primary.main"}
+                  position={"absolute"}
+                  bottom={0}
+                  right={0}
+                  borderRadius={"50%"}
+                  bgcolor={"white"}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setEditing(true);
+                  }}
+                >
+                  <Edit />
+                </Stack>
+              </Stack>
+              <Typography fontSize={28} fontWeight={700}>
+                {user?.username}
+              </Typography>
+              {/* Bottom */}
             </Stack>
+            {/* //one text */}
+            {!user ? (
+              <LoadingPage />
+            ) : (
+              <>
+                <ProfileText
+                  type="grey"
+                  setEdit={setEditing}
+                  value={user.username}
+                  label="Таны нэр"
+                  icon={<PersonOutline fontSize="large" />}
+                />
+                <ProfileText
+                  type="grey"
+                  setEdit={setEditing}
+                  value={user.number}
+                  label="Утасны дугаар"
+                  icon={<Call />}
+                />
+                <ProfileText
+                  type="grey"
+                  setEdit={setEditing}
+                  value={user.email}
+                  label="Имэйл хаяг"
+                  icon={<EmailOutlined />}
+                />
+                <ProfileText
+                  type="white"
+                  value={"Захиалгын түүх"}
+                  icon={<History />}
+                />
+                <ProfileText
+                  type="white"
+                  value={"Гарах"}
+                  icon={<Logout />}
+                  setState={setModal}
+                />
+              </>
+            )}
           </Stack>
-          <Typography fontSize={28} fontWeight={700}>
-            {user?.username}
-          </Typography>
-          {/* Bottom */}
         </Stack>
-        {/* //one text */}
-        {!user ? (
-          <LoadingPage />
-        ) : (
-          <>
-            <ProfileText
-              type="grey"
-              value={user.username}
-              label="Таны нэр"
-              icon={<PersonOutline fontSize="large" />}
-            />
-            <ProfileText
-              type="grey"
-              value={user.number}
-              label="Утасны дугаар"
-              icon={<Call />}
-            />
-            <ProfileText
-              type="grey"
-              value={user.email}
-              label="Имэйл хаяг"
-              icon={<EmailOutlined />}
-            />
-            <ProfileText
-              type="white"
-              value={"Захиалгын түүх"}
-              icon={<History />}
-            />
-            <ProfileText
-              type="white"
-              value={"Гарах"}
-              icon={<Logout />}
-              setState={setModal}
-            />
-          </>
-        )}
-      </Stack>
-    </Stack>
+      )}
+    </>
   );
 }

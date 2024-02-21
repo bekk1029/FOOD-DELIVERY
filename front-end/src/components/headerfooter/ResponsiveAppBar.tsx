@@ -61,16 +61,15 @@ export const ResponsiveAppBar = () => {
   const [userName, setUserName] = useState("");
   const router = useRouter();
   const [login, setLogin] = useState(false);
-  const { isLoggedIn, checkToken } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, checkToken } = useAuth();
   const { myLink } = useFModal();
   const { setDrawOpen } = useDraw();
 
   const getUserName = async () => {
     try {
-      const res = await api.get("/getUserName", {
+      const res = await api.get("/users/getUserName", {
         headers: { Authorization: localStorage.getItem("token") },
       });
-
       setUserName(res.data.userName);
     } catch (error) {
       console.log(error);
@@ -78,8 +77,17 @@ export const ResponsiveAppBar = () => {
   };
 
   useEffect(() => {
-    getUserName();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUserName();
+    }
+  }, [isLoggedIn]);
   return (
     <Stack
       sx={{
@@ -94,7 +102,8 @@ export const ResponsiveAppBar = () => {
         background: "#ffff",
         color: "#000",
         width: "100%",
-        mb: "24px",
+        // mb: "24px",
+        boxShadow: "0 3px 6px -4px",
       }}
     >
       <Container maxWidth={"lg"}>
@@ -166,7 +175,7 @@ export const ResponsiveAppBar = () => {
               flexDirection={"row"}
               gap={1}
               onClick={() => {
-                setDrawOpen(true);
+                setDrawOpen(false);
               }}
               sx={{ cursor: "pointer" }}
             >
@@ -186,8 +195,8 @@ export const ResponsiveAppBar = () => {
               }}
             >
               <Stack
-                width={32}
-                height={32}
+                width={48}
+                height={48}
                 flexDirection={"row"}
                 alignItems={"center"}
                 justifyContent={"center"}
@@ -195,13 +204,18 @@ export const ResponsiveAppBar = () => {
                 overflow={"hidden"}
               >
                 {isLoggedIn ? (
-                  <ProfilePicFrame src="/profile.jpeg" />
+                  <ProfilePicFrame src="/rose.jpeg" />
                 ) : (
                   <PersonOutlined />
                 )}
               </Stack>
 
-              <Typography color={"black"}>
+              <Typography
+                color={"black"}
+                fontSize={{ xs: "1vw", sm: "0.7vw" }}
+                fontWeight="bold"
+                sx={{ textTransform: "uppercase" }}
+              >
                 {isLoggedIn ? userName : "Нэвтрэх"}
               </Typography>
             </Stack>
