@@ -73,7 +73,6 @@ export default function LoginForm(props: LoginFormProps) {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
-
           <Button
             onClick={() => {
               router.push("/passrec");

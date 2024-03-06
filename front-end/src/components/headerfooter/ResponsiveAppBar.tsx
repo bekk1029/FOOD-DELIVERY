@@ -203,11 +203,7 @@ export const ResponsiveAppBar = () => {
                 borderRadius={"50%"}
                 overflow={"hidden"}
               >
-                {isLoggedIn ? (
-                  <ProfilePicFrame src="/rose.jpeg" />
-                ) : (
-                  <PersonOutlined />
-                )}
+                {isLoggedIn ? <ProfilePicFrame src="" /> : <PersonOutlined />}
               </Stack>
 
               <Typography

@@ -20,7 +20,7 @@ export default function CustomCardNoDiscount(props: CustomCardProps) {
           component="img"
           height="186"
           image={image}
-          alt="shaahgu bnshde"
+          alt="food img"
           width="282"
           sx={{ borderRadius: "10", position: "relative", minWidth: "282px" }}
         />
